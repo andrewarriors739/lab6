@@ -1,36 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 6: Quote Finder</title>
-</head>
-<body>
-    
+<%- include ('partials/head.ejs') %>
+
+  <body>
+
     <h1> Quote Finder </h1>
 
+    <div id="layout">
 
-    <form action="/searchByKeyword" method="GET">
-      Keyword: <input type="text" name="keyword">
-      <button> Search by Keyword </button>
-    </form> <br><br>
-
-
-    <form action="/searchByAuthor" method="GET">
-      Author: 
-      <select name="authorId">
-
-        <% for (let i of authors) {%>
-
-         <option value=" <%= i.authorId %> ">
-             <%= i.firstName %> <%= i.lastName %> </option>
-
-        <% } %> 
-      </select>
-
-      <button> Search by Authors </button>
-    </form>
+      <form action="/searchByKeyword" method="GET">
+        Keyword: <input type="text" name="keyword">
+        <button> Search by Keyword </button>
+      </form>
 
 
-</body>
+      <form action="/searchByAuthor" method="GET">
+        Author:
+        <select name="authorId">
+
+          <% for (let i of authors) {%>
+
+            <option value=" <%= i.authorId %> ">
+              <%= i.firstName %>
+                <%= i.lastName %>
+            </option>
+
+            <% } %>
+        </select>
+
+        <button> Search by Authors </button>
+      </form>
+
+      <form action="/searchByCategory" method="GET">
+        Category:
+        <select name="category">
+
+          <% for (let i of quotes) {%>
+
+            <option value="<%= i.category.trim() %>">
+              <%= i.category %>
+            </option>
+
+            <% } %>
+        </select>
+
+        <button> Search by Categories </button>
+      </form>
+
+      <form action="/searchByLikes" method="GET">
+        Likes:
+        <input type="number" name="lowerLikes" min="0" value="0">
+        <input type="number" name="upperLikes" min="1" value="100">
+        <button> Search by Likes </button>
+      </form>
+    </div>
+
+
+  </body>
+  <%- include ('partials/footer.ejs') %>
+
 </html>
