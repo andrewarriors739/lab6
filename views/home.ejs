@@ -2,48 +2,43 @@
 <html lang="en">
 <%- include ('partials/head.ejs') %>
 
-  <body>
-
+<body>
     <h1> Quote Finder </h1>
 
     <div id="layout">
 
       <form action="/searchByKeyword" method="GET">
-        Keyword: <input type="text" name="keyword">
+        Keyword: <input type="text" name="keyword" value="<%= keyword %>">
+        <% if (typeof keywordError !== 'undefined' && keywordError) { %>
+          <div class="text-danger">
+            <%= keywordError %>
+          </div>
+        <% } %>
         <button> Search by Keyword </button>
       </form>
-
 
       <form action="/searchByAuthor" method="GET">
         Author:
         <select name="authorId">
-
-          <% for (let i of authors) {%>
-
-            <option value=" <%= i.authorId %> ">
+          <% for (let i of authors) { %>
+            <option value="<%= i.authorId %>">
               <%= i.firstName %>
-                <%= i.lastName %>
+              <%= i.lastName %>
             </option>
-
-            <% } %>
+          <% } %>
         </select>
-
         <button> Search by Authors </button>
       </form>
 
       <form action="/searchByCategory" method="GET">
         Category:
         <select name="category">
-
-          <% for (let i of quotes) {%>
-
+          <% for (let i of quotes) { %>
             <option value="<%= i.category.trim() %>">
               <%= i.category %>
             </option>
-
-            <% } %>
+          <% } %>
         </select>
-
         <button> Search by Categories </button>
       </form>
 
@@ -54,9 +49,6 @@
         <button> Search by Likes </button>
       </form>
     </div>
-
-
-  </body>
-  <%- include ('partials/footer.ejs') %>
-
+</body>
+<%- include ('partials/footer.ejs') %>
 </html>

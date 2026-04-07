@@ -6,16 +6,84 @@
     <h1 class="text-center"> Famous Quotes </h1>
 
     <nav class="text-center"> <a href="/"> Home </a></nav>
-    
+
     <div class="container">
-
-        <% for (let i of rows) { %> 
+      <% for (let i of rows) { %>
+        <div>
           <i class="fs-5"> <%= i.quote %> </i><br>
-          <%= i.firstName %> <%= i.lastName %><br><br>
-        <% } %>
-
+          <span
+            class="author-link text-decoration-underline"
+            data-author-id="<%= i.authorId %>"
+          >
+            <%= i.firstName %> <%= i.lastName %>
+          </span>
+          <br><br>
+        </div>
+      <% } %>
     </div>
 
     <%- include ('partials/footer.ejs') %>
+
+    <div
+      class="modal fade"
+      id="authorModal"
+      tabindex="-1"
+      aria-labelledby="authorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="authorModalLabel">Author Info</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <img
+              id="authorImage"
+              src=""
+              alt="Author Photo"
+              class="img-fluid rounded"
+              style="max-height: 300px;"
+            />
+            <p><strong id="authorFullName"></strong></p>
+            <p id="authorBio"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".author-link").forEach(link => {
+          link.addEventListener("click", async () => {
+            const authorId = link.dataset.authorId;
+
+            const res = await fetch(`/authorInfo?authorId=${authorId}`);
+            const data = await res.json();
+
+            if (data.error) {
+              alert(data.error);
+              return;
+            }
+
+            document.getElementById("authorFullName").textContent =
+              data.firstName + " " + data.lastName;
+            document.getElementById("authorImage").src = data.imagePath;
+            document.getElementById("authorImage").onerror = function() {
+              this.src = '/images/placeholder.jpg';
+            };
+            document.getElementById("authorBio").textContent = data.bio;
+
+            new bootstrap.Modal(document.getElementById("authorModal")).show();
+          });
+        });
+      });
+    </script>
 </body>
 </html>
