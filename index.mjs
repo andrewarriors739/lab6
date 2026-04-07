@@ -4,7 +4,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-
+// Trying to push to github
 const pool = mysql.createPool({
     host: "kf3k4aywsrp0d2is.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "pi6pecf84m2ipr7q",
