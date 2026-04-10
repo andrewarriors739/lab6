@@ -31,7 +31,7 @@
       aria-labelledby="authorModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="authorModalLabel">Author Info</h5>
@@ -42,16 +42,24 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body text-center">
-            <img
-              id="authorImage"
-              src=""
-              alt="Author Photo"
-              class="img-fluid rounded"
-              style="max-height: 300px;"
-            />
-            <p><strong id="authorFullName"></strong></p>
-            <p id="authorBio"></p>
+          <div class="modal-body">
+            <div class="text-center mb-3">
+              <img
+                id="authorImage"
+                src=""
+                alt="Author Photo"
+                class="img-fluid rounded"
+                style="max-height: 300px;"
+              />
+            </div>
+            <p><strong>Name:</strong> <span id="authorFullName"></span></p>
+            <p><strong>Author ID:</strong> <span id="authorId"></span></p>
+            <p><strong>Date of Birth:</strong> <span id="authorDob"></span></p>
+            <p><strong>Date of Death:</strong> <span id="authorDod"></span></p>
+            <p><strong>Sex:</strong> <span id="authorSex"></span></p>
+            <p><strong>Profession:</strong> <span id="authorProfession"></span></p>
+            <p><strong>Country:</strong> <span id="authorCountry"></span></p>
+            <p><strong>Biography:</strong> <span id="authorBio"></span></p>
           </div>
         </div>
       </div>
@@ -72,13 +80,15 @@
               return;
             }
 
-            document.getElementById("authorFullName").textContent =
-              data.firstName + " " + data.lastName;
-            document.getElementById("authorImage").src = data.imagePath;
-            document.getElementById("authorImage").onerror = function() {
-              this.src = '/images/placeholder.jpg';
-            };
-            document.getElementById("authorBio").textContent = data.bio;
+            document.getElementById("authorFullName").textContent = data.firstName + " " + data.lastName;
+            document.getElementById("authorId").textContent = data.authorId;
+            document.getElementById("authorDob").textContent = data.dob;
+            document.getElementById("authorDod").textContent = data.dod ? data.dod : "N/A";
+            document.getElementById("authorSex").textContent = data.sex;
+            document.getElementById("authorProfession").textContent = data.profession;
+            document.getElementById("authorCountry").textContent = data.country;
+            document.getElementById("authorBio").textContent = data.biography;
+            document.getElementById("authorImage").src = data.portrait;
 
             new bootstrap.Modal(document.getElementById("authorModal")).show();
           });

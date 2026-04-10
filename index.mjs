@@ -4,7 +4,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-// Trying to push to github
+
 const pool = mysql.createPool({
     host: "kf3k4aywsrp0d2is.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "pi6pecf84m2ipr7q",
@@ -101,7 +101,7 @@ app.get("/authorInfo", async (req, res) => {
     try {
         const authorId = req.query.authorId;
 
-        let sql = `SELECT firstName, lastName, biography AS bio, portrait AS imagePath FROM authors WHERE authorId = ?`;
+        let sql = `SELECT authorId, firstName, lastName, dob, dod, sex, profession, country, portrait, biography FROM authors WHERE authorId = ?`;
         const [rows] = await pool.query(sql, [authorId]);
 
         if (rows.length === 0) {
